@@ -7,7 +7,7 @@ import { Platform } from 'ionic-angular'
 
 @Injectable()
 export class UsuarioService {
-  clave: string = "";
+  clave: string = null;
 
   constructor(private af: AngularFireDatabase,
     private storage: Storage,
@@ -52,7 +52,26 @@ export class UsuarioService {
           localStorage.removeItem("clave")
         }
       }
-    }) 
+    })
+    return promesa;
+  }
+
+  cargar_storage(){
+    let promesa = new Promise( (resolve, reject) => {
+      if(this.platform.is("cordova")){
+         this.storage.ready()
+          .then( () => {
+            this.storage.get("clave").then(clave => {
+              this.clave = clave;
+              resolve();
+            })
+          })
+      } else {
+        this.clave = localStorage.getItem("clave");
+        resolve();
+      }
+    })
+    return promesa;
   }
 
 }

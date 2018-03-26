@@ -4,6 +4,8 @@ import { Slides } from 'ionic-angular';
 
 import { UsuarioService } from '../../providers/usuario/usuario';
 
+import { HomePage } from '../home/home';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -57,6 +59,7 @@ export class LoginPage {
 
   ingresar() {
     //ir a home
+    this.navCtrl.setRoot(HomePage);
   }
 
   ionViewDidLoad() {
