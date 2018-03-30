@@ -15,22 +15,28 @@ import { UsuarioService} from '../usuario/usuario';
 @Injectable()
 export class UbicacionProvider {
   usuario: AngularFireObject<any>; 
+  private watch :any
 
   constructor(private geolocation: Geolocation,
           private af: AngularFireDatabase,
           private us: UsuarioService) {
-    
-    this.usuario = this.af.object(`/usuarios/${this.us.clave}`)
+            if( !this.us.clave) return;
+            this.usuario = this.af.object(`/usuarios/${this.us.clave}`)
   }
 
   iniciar_localizacion(){
-    let watch = this.geolocation.watchPosition();
-    watch.subscribe((data) => {
+    this.watch = this.geolocation.watchPosition()
+    .subscribe((data) => {
      // data can be a set of coordinates, or an error (if an error occurred).
      // data.coords.latitude
      // data.coords.longitude 
+     if( !this.us.clave) return;
      this.usuario.update({lat: data.coords.latitude, lgt: data.coords.longitude})
     });
+  }
+
+  detener_watch(){
+    this.watch.unsubscribe();
   }
 
 }

@@ -53,7 +53,7 @@ export class UsuarioService {
         }
       }
     })
-    
+
     return promesa;
   }
 
@@ -73,6 +73,11 @@ export class UsuarioService {
       }
     })
     return promesa;
+  }
+
+  borrar_usuario() {
+    this.clave = null;
+    this.guardar_storage();
   }
 
 }
