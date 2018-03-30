@@ -28,8 +28,7 @@ export class UbicacionProvider {
     watch.subscribe((data) => {
      // data can be a set of coordinates, or an error (if an error occurred).
      // data.coords.latitude
-     // data.coords.longitude
-     console.log(data);
+     // data.coords.longitude 
      this.usuario.update({lat: data.coords.latitude, lgt: data.coords.longitude})
     });
   }
